@@ -113,7 +113,7 @@ def PrintText(Image):
 
 if __name__ == "__main__":
     
-    File = "test_images/screenshot.png"
+    File = #Your FileName
     #Most likely you won't like hardcoding images files then instead you
     # could use sys module and take command line arguments
     
