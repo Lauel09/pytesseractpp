@@ -4,19 +4,15 @@ try:
 except ImportError:
     import Image as Im
 
-
 from os import remove,chdir,path,remove,getcwd
 from pkgutil import read_code
 
 from pytesseract.pytesseract import image_to_string
 
 from UrlDown import GetFileName
-from random import randint
-
-import multiprocessing as MultiPro
-
 from threading import Thread
-import sys
+
+from sys import argv
 
 class image_object:
     
@@ -131,9 +127,9 @@ def read_image(Image, UserLang=None):
     
 if __name__ == "__main__":
     
-    if len(sys.argv) > 1:
+    if len(argv) > 1:
         
-        file = image_object(sys.argv[1])
+        file = image_object(argv[1])
 
         enlarged = file.EnlargeImage(2)
         split1, split2 = file.DecideSplit(enlarged)
@@ -150,19 +146,15 @@ if __name__ == "__main__":
             #No need to to create two different threads
             
             ThreadOne = Thread(target=PrintText, args=(split1,))
-            
+             PrintText(split2)
+                
             ThreadOne.start()
             ThreadOne.join()
-            
-            print(read_image(split2))
-            remove(split2)
+           
             file.remove_files()
-            
     else:
         print("Not enough args")
         exit(1)
-
-    #Thread(target=ThreadingOne)
     
     
         
