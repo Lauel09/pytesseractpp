@@ -18,6 +18,7 @@ Another one of my personal projects,I have been writing this from last two days.
 2. Converting an RGB image to Bi-level image, It is better to use PIL's convert function than this one.
 3. Multiprocessing using standard module multiprocessing ,further explained below.
 4. There are some other helper functions too, not much useful though.
+5. Multi-threading using standard module threading.
 
 ---
 #### How I implemented multiprocessing:-
@@ -38,3 +39,6 @@ You definitely wouldn't want something like this,so to keep things simple I spli
 
 ---
 *29th Jan 2021*
+#### Some Tests I done:-
+- Multithreading was 61% faster than single threading program and 51% faster than multiprocessing program.
+- Multiprocessing was 28% faster than single threading program.
