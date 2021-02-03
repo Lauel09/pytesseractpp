@@ -27,18 +27,21 @@ The problem with this method was collecting text together, for example let's say
 For the text reading to make sense you would have to read one line from the quadrant two(left side one) and then read one from quadrant 
 one(right side one) and append one behind second, same with third and fourth.
 
-This turns more **complex** when you add threading or multiprocessing 
-into this.All the threads would have to interact with each other and 
+This turns more complex furhter.All the threads would have to interact with each other and 
 would have to work according to their intervals.This add stuffs like:-
 
 ---
 *How would they order themselves ? Would they work in pair ? What if one thread does it jobs before second one would it have to wait ? How thread locking would need to be interacted with global variables ?* and so on.
 
 ---
-You definitely wouldn't want something like this,so to keep things simple I split the image into the half horizontally not vertically(*why not ?* -> *It also has it's own complex story*) if it passes the *certain* critertia then given both of the split image file to two cores and make them store the data in a global variable which is a list.
+So to keep things simple I split the image into the half horizontally not vertically(*why not ?* -> *It also has it's own complex story*) if it passes the *certain* critertia then given both of the split image file to two cores and make them store the data in a global variable which is a list.
 
 ---
-*29th Jan 2021*
+
 #### Some Tests I done:-
 - Multithreading was 61% faster than single threading program and 51% faster than multiprocessing program.
 - Multiprocessing was 28% faster than single threading program.
+
+---
+
+*29th Jan 2021*
