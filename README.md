@@ -1,4 +1,4 @@
-# Multiprocessing with pytesseract
+# Multiprocessing/Multithreading with pytesseract
 
 Another one of my personal projects,I have been writing this from last two days.
 
