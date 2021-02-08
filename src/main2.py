@@ -4,7 +4,7 @@ try:
 except ImportError:
     import Image as Im
 
-from os import remove,chdir,path,remove,getcwd
+from os import remove,chdir,path,remove,getcwd,environ
 from pkgutil import read_code
 
 from pytesseract.pytesseract import image_to_string
@@ -22,7 +22,8 @@ class image_object:
         self.ToDelete = []
     
     def chng_dir(self):
-        if self.file_path == path.dirname(self.file_path):
+      
+        if path.dirname(self.file_path) == '':
             pass
         else:
             chdir(path.dirname(self.file_path))
@@ -32,6 +33,7 @@ class image_object:
         ImageFile = Im.open(self.file_name)
         width, height = ImageFile.size
         #This is for a split in half horizontally
+        
         size = (0, height/2, width, height)
         new_image = ImageFile.crop(size)
 
@@ -107,12 +109,12 @@ class image_object:
             return FileName
     
 
-    def remove_files(x:list):
-        for i in x:
+    def remove_files(self):
+        for i in self.ToDelete:
             remove(i)
 
-def PrintText(Image):
-    Text = read_image(Image)
+def PrintText(Image,lang=None):
+    Text = read_image(Image,lang)
     print(Text)
 
 def read_image(Image, UserLang=None):
@@ -122,13 +124,14 @@ def read_image(Image, UserLang=None):
     #print(text)
         return text
     else:
-        text = image_to_string(Image, lang=UserLang).split(' ')
+        text = image_to_string(Im.open(Image), lang=UserLang)
         return text
     
 if __name__ == "__main__":
     
     if len(argv) > 1:
-        
+        #Just incase setting this up
+        environ['TESSDATA_PREFIX'] = '/usr/share/tessdata/'
         file = image_object(argv[1])
 
         enlarged = file.EnlargeImage(2)
@@ -144,18 +147,26 @@ if __name__ == "__main__":
             #We need threading, to make stuffs fast
             # Give one task to extra thread whle other one to main thread
             #No need to to create two different threads
-            
-            ThreadOne = Thread(target=PrintText, args=(split1,))
-             PrintText(split2)
+            lang = str()
+            if len(argv) > 2:
                 
+                if argv[2].startswith('--'):
+                    lang = argv[2].lstrip('--')
+                else:
+                    lang = None
+            else:
+                lang = None
+
+            ThreadOne = Thread(target=PrintText, args=(split1,lang))
             ThreadOne.start()
-            ThreadOne.join()
-           
+            
+            PrintText(split2)    
             file.remove_files()
+
+            ThreadOne.join()
+        
     else:
         print("Not enough args")
         exit(1)
     
     
-        
-        
